@@ -119,6 +119,7 @@ services:
     command: webserver
     ports:
       - "8080:8080"
+    volumes: [/Users/april.song/Documents/demos/dbt_demo/dbt-databricks-c360/dags:/usr/local/airflow/dags]
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
       interval: 30s

@@ -10,7 +10,7 @@ import os
 
 # We're hardcoding this value here for the purpose of the demo, but in a production environment this
 # would probably come from a config file and/or environment variables!
-DBT_PROJECT_DIR = "/Users/april.song/Documents/demos/dbt_demo/jaffle_shop"
+DBT_PROJECT_DIR = "/dbt-databricks-c360/dbt"
 
 
 with DAG(
@@ -19,19 +19,6 @@ with DAG(
     schedule_interval = None
 ) as dag:
    
-   
-   
-   
-    dbt_seed = BashOperator(
-        task_id="dbt_debug",
-        bash_command=f"dbt debug --config-dir",
-    )
-
-    dbt_seed = BashOperator(
-        task_id="dbt_seed",
-        bash_command=f"dbt seed --profiles-dir {DBT_PROJECT_DIR} --project-dir {DBT_PROJECT_DIR}",
-    )
-
     dbt_run = BashOperator(
         task_id="dbt_run",
         bash_command=f"dbt run --profiles-dir {DBT_PROJECT_DIR} --project-dir {DBT_PROJECT_DIR}",
@@ -42,4 +29,4 @@ with DAG(
         bash_command=f"dbt test --profiles-dir {DBT_PROJECT_DIR} --project-dir {DBT_PROJECT_DIR}",
     )
 
-    dbt_seed >> dbt_run >> dbt_test
+    dbt_run >> dbt_test
